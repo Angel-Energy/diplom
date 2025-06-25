@@ -16,15 +16,19 @@ interface DiagramModalProps {
   svgContent: string
   title: string
   children: React.ReactNode
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
 export function DiagramModal({
   svgContent,
   title,
   children,
+  open,
+  onOpenChange,
 }: DiagramModalProps) {
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[90vw] h-[90vh] bg-slate-900/80 backdrop-blur-sm border-slate-700 flex flex-col">
         <DialogHeader>

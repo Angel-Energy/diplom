@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Github, Download, Zap, Shield, Database, Terminal, Code, Cpu, Calendar, Gamepad, Gamepad2, Layers, ShieldCheck, ShieldPlus, Lock } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { useEffect, useState } from "react"
 
 // Кастомная иконка контроллера
 const GameController = ({ className }: { className?: string }) => (
@@ -21,18 +22,32 @@ const GameController = ({ className }: { className?: string }) => (
 )
 
 export default function HomePage() {
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   // Функция для скачивания APK файла
   const handleDownloadAPK = () => {
-    const link = document.createElement("a")
-    link.href = "/message404.apk" // Предполагается, что файл находится в /public
-    link.download = "message404.apk"
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
+    if (typeof window !== 'undefined') {
+      const link = document.createElement("a")
+      link.href = "/message404.apk" // Предполагается, что файл находится в /public
+      link.download = "message404.apk"
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+    }
   }
 
   const handleOpenGitHub = () => {
-    window.open("https://github.com/message404/documentation", "_blank")
+    if (typeof window !== 'undefined') {
+      window.open("https://github.com/message404/documentation", "_blank")
+    }
+  }
+
+  if (!mounted) {
+    return null
   }
 
   return (
@@ -194,7 +209,7 @@ export default function HomePage() {
         <div className="container mx-auto">
           <div className="grid md:grid-cols-4 gap-8 text-center">
             {[
-              { number: "42", label: "Диаграммы", color: "text-cyan-400" },
+              { number: "58", label: "Диаграммы", color: "text-cyan-400" },
               { number: "60", label: "Мини-игры", color: "text-purple-400" },
               { number: "10", label: "Игровых дней", color: "text-cyan-400" },
               { number: "5", label: "Концовок", color: "text-purple-400" },

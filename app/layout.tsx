@@ -1,13 +1,12 @@
-import type { Metadata } from 'next'
+"use client"
+
 import './globals.css'
+import Script from 'next/script'
+import Head from 'next/head'
+import { Suspense } from 'react'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
-
-export const metadata: Metadata = {
-  title: 'Сообщение 404 - Документация',
-  description: 'Документация проекта мобильной игры-детектива "Сообщение 404"',
-  generator: 'Next.js',
-}
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 
 export default function RootLayout({
   children,
@@ -15,23 +14,30 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ru" suppressHydrationWarning>
+    <html lang="ru">
       <head>
-        <script 
+        <title>Сообщение 404 - Документация</title>
+        <meta name="description" content="Документация проекта мобильной игры-детектива 'Сообщение 404'" />
+        <meta name="generator" content="Next.js" />
+        <Script 
           src="https://cdn.jsdelivr.net/npm/mermaid@11.7.0/dist/mermaid.min.js"
-          async
+          strategy="afterInteractive"
         />
       </head>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        <ErrorBoundary>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Suspense fallback={<div>Загрузка...</div>}>
+              {children}
+            </Suspense>
+            <Toaster />
+          </ThemeProvider>
+        </ErrorBoundary>
       </body>
     </html>
   )

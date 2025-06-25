@@ -46,7 +46,7 @@ const navigation = [
     href: "/docs/qa",
   },
   {
-    title: "Настройка",
+    title: "Развертывание",
     href: "/docs/setup",
   },
   {
@@ -61,12 +61,18 @@ const navigation = [
     title: "Диаграммы",
     href: "/docs/diagrams",
     children: [
-      { title: "Архитектура (8)", href: "/docs/diagrams/architecture" },
-      { title: "Базы данных (7)", href: "/docs/diagrams/data" },
-      { title: "Игровые механики (7)", href: "/docs/diagrams/game" },
-      { title: "UI/UX (5)", href: "/docs/diagrams/ui" },
-      { title: "Инфраструктура (4)", href: "/docs/diagrams/infrastructure" },
-      { title: "Динамические (6)", href: "/docs/diagrams/dynamic" },
+      { title: "Архитектура", href: "/docs/diagrams/architecture" },
+      { title: "Базы данных", href: "/docs/diagrams/data" },
+      { title: "Игровые механики", href: "/docs/diagrams/game" },
+      { title: "UI/UX", href: "/docs/diagrams/ui" },
+      { title: "Инфраструктура", href: "/docs/diagrams/infrastructure" },
+      { title: "Динамические", href: "/docs/diagrams/dynamic" },
+      { title: "Поведение", href: "/docs/diagrams/behavior" },
+      { title: "Безопасность", href: "/docs/diagrams/security" },
+      { title: "Тестирование", href: "/docs/diagrams/testing" },
+      { title: "Жизненный цикл", href: "/docs/diagrams/lifecycle" },
+      { title: "API", href: "/docs/diagrams/api" },
+      { title: "Прочие", href: "/docs/diagrams/other" },
     ],
   },
   {

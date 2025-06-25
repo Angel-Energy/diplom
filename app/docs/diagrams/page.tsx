@@ -1,71 +1,28 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+import { getAllDiagrams, diagramCategories } from '@/diagrams/registry'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import Link from 'next/link'
+import { ArrowRight, BarChart3, Layers, Shield, TestTube, Clock, Database, Gamepad2, Palette, Server, Code2, MoreHorizontal } from 'lucide-react'
+import DiagramPageLayout from '@/components/diagram-page-layout'
 
 export default function DiagramsPage() {
-  const diagramCategories = [
-    {
-      title: "Архитектура",
-      short_description: "C4 модель, системный контекст, контейнеры, компоненты, слои",
-      count: 5,
-      href: "/docs/diagrams/architecture",
-      badgeColor: "bg-red-500/10 text-red-400 border-red-500/20"
-    },
-    {
-      title: "Данные",
-      short_description: "Концептуальная модель, ERD, потоки данных, миграция, репликация",
-      count: 5,
-      href: "/docs/diagrams/data",
-      badgeColor: "bg-orange-500/10 text-orange-400 border-orange-500/20"
-    },
-    {
-      title: "API",
-      short_description: "Ktor эндпоинты, форматы запросов, состояния API, документация",
-      count: 4,
-      href: "/docs/diagrams/api",
-      badgeColor: "bg-amber-500/10 text-amber-400 border-amber-500/20"
-    },
-    {
-      title: "Динамические",
-      short_description: "Игровой процесс, состояния, мини-игры, синхронизация",
-      count: 4,
-      href: "/docs/diagrams/dynamic",
-      badgeColor: "bg-lime-500/10 text-lime-400 border-lime-500/20"
-    },
-    {
-      title: "Игровые механики",
-      short_description: "Game Loop, диалоги, мини-игры, прогрессия, концовки",
-      count: 6,
-      href: "/docs/diagrams/game",
-      badgeColor: "bg-green-500/10 text-green-400 border-green-500/20"
-    },
-    {
-      title: "UI/UX",
-      short_description: "User Flow, мессенджер-интерфейс, состояния UI, адаптивность",
-      count: 4,
-      href: "/docs/diagrams/ui",
-      badgeColor: "bg-cyan-500/10 text-cyan-400 border-cyan-500/20"
-    },
-    {
-      title: "Инфраструктура",
-      short_description: "Локальная сеть, безопасность, мониторинг, резервное копирование",
-      count: 4,
-      href: "/docs/diagrams/infrastructure",
-      badgeColor: "bg-purple-500/10 text-purple-400 border-purple-500/20"
-    }
-  ]
+  // Получаем все диаграммы и категории из реестра
+  const allDiagrams = getAllDiagrams()
+  const categories = diagramCategories.map(cat => ({
+    id: cat.id,
+    title: cat.title,
+    short_description: cat.description,
+    count: cat.diagrams.length,
+    href: `/docs/diagrams/${cat.id}`,
+    badgeColor: cat.color,
+  }))
 
-  const totalDiagrams = diagramCategories.reduce((sum, category) => sum + category.count, 0)
-  
-  const architecturalDiagrams = diagramCategories
-    .filter(cat => ['Архитектура', 'Данные', 'Инфраструктура'].includes(cat.title))
-    .reduce((sum, cat) => sum + cat.count, 0)
-  
-  const functionalDiagrams = diagramCategories
-    .filter(cat => ['Игровые механики', 'API', 'UI/UX', 'Динамические'].includes(cat.title))
-    .reduce((sum, cat) => sum + cat.count, 0)
+  const totalDiagrams = allDiagrams.length
+  const architecturalDiagrams = allDiagrams.filter(d => d.category === "architecture").length
+  const behaviorDiagrams = allDiagrams.filter(d => d.category === "behavior").length
+  const securityDiagrams = allDiagrams.filter(d => d.category === "security").length
 
   return (
     <div className="space-y-8">
@@ -74,11 +31,15 @@ export default function DiagramsPage() {
           Диаграммы проекта
         </h1>
         <p className="text-xl text-slate-300">
-          Все {totalDiagrams} диаграмм проекта «Сообщение 404» в текстовом формате с описаниями и выводами
+          Все {totalDiagrams} диаграмм{totalDiagrams % 10 === 1 && totalDiagrams % 100 !== 11 ? 'а' : totalDiagrams % 10 >= 2 && totalDiagrams % 10 <= 4 && (totalDiagrams % 100 < 10 || totalDiagrams % 100 >= 20) ? 'ы' : ''} проекта «Сообщение 404» в {categories.length} категори{categories.length % 10 === 1 && categories.length % 100 !== 11 ? 'и' : categories.length % 10 >= 2 && categories.length % 10 <= 4 && (categories.length % 100 < 10 || categories.length % 100 >= 20) ? 'ях' : 'ях'} с подробными описаниями
         </p>
         <div className="flex flex-wrap gap-2">
-          {diagramCategories.map((category, index) => (
-            <Badge key={index} variant="outline" className={category.badgeColor}>
+          {categories.map((category, index) => (
+            <Badge
+              key={index}
+              variant="outline"
+              className={category.badgeColor}
+            >
               {category.title}: {category.count}
             </Badge>
           ))}
@@ -92,51 +53,79 @@ export default function DiagramsPage() {
         <CardContent>
           <div className="grid md:grid-cols-4 gap-6 text-center">
             <div>
-              <div className="text-3xl font-bold text-cyan-400 mb-2">{totalDiagrams}</div>
+              <div className="text-3xl font-bold text-cyan-400 mb-2">
+                {totalDiagrams}
+              </div>
               <div className="text-sm text-slate-400">Всего диаграмм</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-purple-400 mb-2">{diagramCategories.length}</div>
+              <div className="text-3xl font-bold text-purple-400 mb-2">
+                {categories.length}
+              </div>
               <div className="text-sm text-slate-400">Категорий</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-cyan-400 mb-2">{architecturalDiagrams}</div>
-              <div className="text-sm text-slate-400">Архитектурных</div>
+              <div className="text-3xl font-bold text-red-400 mb-2">
+                {architecturalDiagrams}
+              </div>
+              <div className="text-sm text-slate-400">Архитектурные</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-purple-400 mb-2">{functionalDiagrams}</div>
-              <div className="text-sm text-slate-400">Функциональных</div>
+              <div className="text-3xl font-bold text-cyan-400 mb-2">
+                {behaviorDiagrams + securityDiagrams}
+              </div>
+              <div className="text-sm text-slate-400">Поведение + Безопасность</div>
             </div>
           </div>
         </CardContent>
       </Card>
-      
+
       <div className="p-6 bg-slate-800/50 rounded-lg border border-slate-700/50">
-        <h3 className="text-lg font-semibold text-white mb-3">О диаграммах проекта «Сообщение 404»</h3>
-        <p className="text-slate-300 text-sm space-y-2">
-          <span>• Все диаграммы созданы специально для мобильной игры-детектива с мессенджер-интерфейсом</span><br/>
-          <span>• Учтена специфика проекта: 10 игровых дней, 60 мини-игр, 5 концовок, офлайн-режим</span><br/>
-          <span>• Технический стек: Kotlin, Jetpack Compose, MVVM, Ktor, MySQL, XAMPP, Wi-Fi точка доступа</span><br/>
-          <span>• Соответствие российскому законодательству: 152-ФЗ, ГОСТ Р 34.12-2015, анонимная авторизация</span><br/>
-          <span>• Локальная инфраструктура: автономность, приватность, синхронизация через Wi-Fi</span><br/>
-          <span>• Каждая диаграмма содержит практический вывод для разработчиков, QA и геймдизайнеров</span>
-        </p>
+        <h3 className="text-lg font-semibold text-white mb-3">
+          О диаграммах проекта «Сообщение 404»
+        </h3>
+        <div className="text-slate-300 text-sm space-y-2">
+          <div>
+            • <strong>Все диаграммы</strong> созданы специально для мобильной игры-детектива с архитектурой MVVM.
+          </div>
+          <div>
+            • Полный охват: от архитектуры Jetpack Compose до аспектов безопасности и тестирования.
+          </div>
+          <div>
+            • Технологический стек: Kotlin, MVVM, Clean Architecture, Ktor, Room, MySQL, DexGuard.
+          </div>
+          <div>
+            • Соответствие стандартам: GDPR, 152-ФЗ, ГОСТ Р 34.12-2015, OWASP Mobile Top 10.
+          </div>
+          <div>
+            • Каждая диаграмма содержит практические рекомендации для разработчиков, тестировщиков и архитекторов.
+          </div>
+          <div>
+            • Модульная файловая система обеспечивает переиспользование и версионирование диаграмм.
+          </div>
+        </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {diagramCategories.map((category, index) => {
+        {categories.map((category, index) => {
           const percentage = totalDiagrams > 0 ? Math.round((category.count / totalDiagrams) * 100) : 0
           return (
             <Link key={index} href={category.href} className="block group">
               <Card className="bg-slate-800/50 border-slate-700/50 h-full group-hover:border-cyan-400 transition-colors flex flex-col">
                 <CardHeader>
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-white group-hover:text-cyan-400">{category.title}</CardTitle>
-                    <Badge className={category.badgeColor}>{category.count}</Badge>
+                    <CardTitle className="text-white group-hover:text-cyan-400">
+                      {category.title}
+                    </CardTitle>
+                    <Badge className={category.badgeColor}>
+                      {category.count}
+                    </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="flex-grow flex flex-col justify-between">
-                  <p className="text-slate-400 text-sm mb-4">{category.short_description}</p>
+                  <p className="text-slate-400 text-sm mb-4">
+                    {category.short_description}
+                  </p>
                   <div className="space-y-2 mt-auto">
                     <div className="w-full bg-slate-700 rounded-full h-2">
                       <div
