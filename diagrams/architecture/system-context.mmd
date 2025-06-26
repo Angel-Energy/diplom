@@ -1,0 +1,6 @@
+%% System Context
+%% Контекстная диаграмма системы.
+flowchart LR
+    AndroidClient[Android Client] --> LoadBalancer[Load Balancer (Nginx)]
+    LoadBalancer --> KtorServer[Ktor Server Cluster]
+    KtorServer --> MySQL[MySQL Cluster] 

@@ -1,0 +1,8 @@
+%% Интеграция Jetpack Compose с анимациями
+%% Архитектура анимационной системы для эффектов и переходов.
+flowchart TD
+    ChatScreen --> AnimatedVisibility
+    ChatScreen --> GlitchEffect
+    MessageItem --> animateFloatAsState
+    GlitchEffect --> Animatable
+    GlitchEffect --> InfiniteRepeatableSpec 

@@ -1,0 +1,5 @@
+%% Стресс-тест экранов: 50 итераций без крашей.
+sequenceDiagram
+    participant E as Espresso
+    E->>E: 50 итераций\nLockScreen → HomeScreen → ChatScreen
+    E-->>E: Проверка крашей 

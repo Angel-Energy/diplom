@@ -1,0 +1,13 @@
+%% Аутентификационный поток API: логин, JWT, доступ к эндпоинтам.
+@startuml Auth Flow API
+skinparam monochrome true
+
+actor Client
+participant "Ktor Client" as KC
+participant "Ktor Server" as KS
+
+Client -> KC : Ввод логина/пароля
+KC -> KS : POST /auth
+KS --> KC : JWT
+KC --> Client : Сохранение токена
+@enduml 

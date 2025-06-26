@@ -83,7 +83,7 @@ export default function InfrastructurePage() {
   ]
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <div className="space-y-4">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
           Инфраструктура
@@ -225,6 +225,51 @@ export default function InfrastructurePage() {
           </div>
         </CardContent>
       </Card>
+
+      {/* 39. Схема развертывания сервера */}
+      <MermaidDiagram
+        title="Схема развертывания сервера"
+        description="Ktor-приложение и MySQL с SQLCipher развернуты на VPS (Ubuntu 22.04). Сервер запускается через ktor-server-netty, MySQL шифрует данные. Доступ через домен с TLS, тёмная тема в админ-интерфейсе мониторинга."
+        mermaidCode={`%% PlantUML\n@startuml Deployment Schema\nskinparam monochrome true\n\nnode \"VPS (Ubuntu 22.04)\" {\n  [Ktor Server] --> [MySQL with SQLCipher]\n}\n\n[Ktor Server] : Web API (TLS)\n[MySQL with SQLCipher] : Encrypted Storage\n@enduml`}
+        category="infrastructure"
+        conclusion="Требует настройки firewall, доступа, итеративных обновлений. Документация включает конфигурации."
+      />
+
+      {/* 40. Сеть с шифрованием */}
+      <MermaidDiagram
+        title="Сеть с шифрованием"
+        description="Android-клиент соединяется с сервером через TLS 1.3 (Ktor Client ↔ Ktor Server). Сертификат настроен, данные шифруются AES-256. Тёмная тема в интерфейсе статуса соединения."
+        mermaidCode={`graph TD\n    A[Клиент\\nAndroid] -->|TLS 1.3| B[Ktor Server]\n    B --> C[MySQL]`}
+        category="infrastructure"
+        conclusion="Требует тестирования на утечки, регулярного обновления сертификатов. Документация включает схему шифрования."
+      />
+
+      {/* 41. Модель масштабирования */}
+      <MermaidDiagram
+        title="Модель масштабирования"
+        description="Балансировщик (Nginx) распределяет нагрузку между несколькими экземплярами Ktor, все подключены к MySQL с SQLCipher. Поддержка до 10k пользователей, тёмная тема в админ-панели мониторинга."
+        mermaidCode={`%% PlantUML\n@startuml Scaling Model\nskinparam monochrome true\n\nnode \"Load Balancer (Nginx)\" {\n  [Ktor Instance 1]\n  [Ktor Instance 2]\n  [Ktor Instance 3]\n}\n\n[Ktor Instance 1] --> [MySQL with SQLCipher]\n[Ktor Instance 2] --> [MySQL with SQLCipher]\n[Ktor Instance 3] --> [MySQL with SQLCipher]\n@enduml`}
+        category="infrastructure"
+        conclusion="Требует тестирования на 10k пользователей, динамической настройки балансировщика. Документация включает план масштабирования."
+      />
+
+      {/* 42. Бэкап данных прогресса */}
+      <MermaidDiagram
+        title="Бэкап данных прогресса"
+        description="Автоматический бэкап MySQL (users, game_states, dialogues) на S3-хранилище каждые 24 часа. Используется cron-скрипт, данные шифруются перед загрузкой. Тёмная тема в интерфейсе статуса бэкапа."
+        mermaidCode={`graph TD\n    A[MySQL] --> B[Шифрование]\n    B --> C[S3 Хранилище\\nЕжедневно]`}
+        category="infrastructure"
+        conclusion="Требует регулярного тестирования восстановления, шифрования данных. Документация включает расписание."
+      />
+
+      {/* 43. Мониторинг сервера */}
+      <MermaidDiagram
+        title="Мониторинг сервера"
+        description="Логи собираются через ELK Stack, аптайм мониторится Prometheus + Grafana. Логи и аптайм отображаются в дашборде, тёмная тема в Grafana."
+        mermaidCode={`%% PlantUML\n@startuml Server Monitoring\nskinparam monochrome true\n\nnode \"VPS\" {\n  [Ktor Server] --> [ELK Stack : Логи]\n  [Prometheus] --> [Grafana : Аптайм]\n}\n\n[Ktor Server] : Генерация логов\n@enduml`}
+        category="infrastructure"
+        conclusion="Требует настройки оповещений, сбора данных в реальном времени. Документация включает дашборд."
+      />
     </div>
   )
 }

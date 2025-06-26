@@ -1,0 +1,13 @@
+%% Пример запроса/ответа мини-игры через API.
+sequenceDiagram
+    participant C as Client
+    participant KC as Ktor Client
+    participant KS as Ktor Server
+    C->>KC: GET /minigame/task
+    KC->>KS: Запрос задачи
+    KS-->>KC: { "task": "X7K9P2", "hint": "Сдвиг на 3" }
+    KC-->>C: Отображение задачи
+    C->>KC: POST /minigame/submit { "answer": "ABCDE" }
+    KC->>KS: Отправка ответа
+    KS-->>KC: { "result": "success", "trust": 10 }
+    KC-->>C: Обновление UI 

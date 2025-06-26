@@ -1,0 +1,15 @@
+@startuml Sequence Diagram Progress Request
+skinparam monochrome true
+
+actor Client
+participant "Ktor Client" as KC
+participant "Ktor Server" as KS
+participant "MySQL with SQLCipher" as DB
+
+Client -> KC : Запрос прогресса
+KC -> KS : Отправка зашифрованного запроса
+KS -> DB : Запрос данных
+DB --> KS : Возвращение зашифрованных данных
+KS --> KC : Отправка ответа
+KC --> Client : Обновление UI и Room
+@enduml 

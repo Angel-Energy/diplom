@@ -1,0 +1,14 @@
+%% Дерево сюжета первого дня
+%% Ветвления: Скрыть/Сообщить Максиму, влияние на trust/threat и доступ к подсказкам.
+graph TD
+    A[Начало: "Проверь код, это важно!"] --> B[Скрыть]
+    A --> C[Сообщить Максиму]
+    B --> D[Trust с Павлом +10<br>Threat от Максима +5<br>Подсказка для мини-игры]
+    C --> E[Trust с Максимом +10<br>Threat от Неизвестного +15<br>Блокировка информации]
+
+flowchart TD
+    ChatScreen --> AnimatedVisibility
+    ChatScreen --> GlitchEffect
+    MessageItem --> animateFloatAsState
+    GlitchEffect --> Animatable
+    GlitchEffect --> InfiniteRepeatableSpec 

@@ -1,0 +1,6 @@
+%% Поток данных шифрования
+%% Описывает процесс сквозного шифрования данных от клиента до сервера.
+flowchart LR
+    A[Android Client] -->|AES-256-GCM| B[Local SQLCipher]
+    B -->|TLS 1.3| C[Ktor Server]
+    C -->|SQLCipher| D[MySQL Encrypted] 

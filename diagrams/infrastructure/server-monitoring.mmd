@@ -1,0 +1,11 @@
+%% Мониторинг сервера: логи через ELK Stack, аптайм через Prometheus + Grafana, тёмная тема в Grafana.
+@startuml Server Monitoring
+skinparam monochrome true
+
+node "VPS" {
+  [Ktor Server] --> [ELK Stack : Логи]
+  [Prometheus] --> [Grafana : Аптайм]
+}
+
+[Ktor Server] : Генерация логов
+@enduml 

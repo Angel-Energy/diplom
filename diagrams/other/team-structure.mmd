@@ -1,0 +1,25 @@
+%% Структура команды: разработчики, дизайнеры, тестировщики, менеджер. Agile, Jira, тёмная тема.
+@startuml Team Structure
+skinparam monochrome true
+
+package "Разработчики" {
+  [Android Dev (Kotlin)]
+  [Backend Dev (Ktor)]
+}
+
+package "Дизайнеры" {
+  [UI/UX Designer]
+  [2D Artist]
+  [Motion Designer]
+}
+
+package "Тестировщики" {
+  [QA Analyst]
+  [Game Tester]
+  [Accessibility Tester]
+}
+
+[Manager] --> [Разработчики]
+[Manager] --> [Дизайнеры]
+[Manager] --> [Тестировщики]
+@enduml 

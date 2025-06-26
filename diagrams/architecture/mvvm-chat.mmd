@@ -1,0 +1,75 @@
+# MVVM-структура чата
+
+## Описание
+Диаграмма отражает архитектуру чата на базе MVVM с использованием Jetpack Compose, StateFlow, репозитория и слоя шифрования. Вся логика разделена на View, ViewModel и Repository, что обеспечивает масштабируемость и безопасность.
+
+## Взаимодействие с командой
+- Android-разработчик: реализует UI, ViewModel и интеграцию с репозиторием.
+- UI/UX-дизайнер: проектирует макеты чата.
+- Backend-разработчик: настраивает API и серверную синхронизацию.
+- Специалист по безопасности: внедряет шифрование.
+- Геймдизайнер: определяет механику чата.
+- Гейм-тестер: тестирует стабильность и баги.
+- Технический писатель: документирует архитектуру.
+
+## Аспекты работы
+- Требует тесного взаимодействия между разработчиками и дизайнерами.
+- Тестирование шифрования и анимаций.
+- Документация поддерживается техническим писателем.
+
+```plantuml
+@startuml MVVM Chat Architecture
+skinparam monochrome true
+
+!define RECTANGLE class
+!define ARROW -> 
+!define DASHED --> 
+
+package "View (Jetpack Compose)" {
+  [ChatScreen] #LightGray
+  [MessageList] #LightGray
+  [ChatInput] #LightGray
+}
+
+package "ViewModel" {
+  [ChatViewModel] #LightGray
+  [State] #LightGray : messages: List<Message>
+  [State] : isEncrypted: Boolean
+  [State] : userInput: String
+}
+
+package "Repository" {
+  [ChatRepository] #LightGray
+  [LocalDataSource] #LightGray : loadMessages()
+  [RemoteDataSource] #LightGray : fetchMessages()
+  [EncryptionService] #LightGray : encryptMessage(), decryptMessage()
+}
+
+[ChatScreen] ARROW [ChatViewModel] : observes
+[ChatViewModel] ARROW [State] : manages
+[ChatViewModel] DASHED [ChatRepository] : interacts
+[ChatRepository] ARROW [LocalDataSource] : retrieves
+[ChatRepository] ARROW [RemoteDataSource] : syncs
+[ChatRepository] ARROW [EncryptionService] : encrypts/decrypts
+
+note right of [ChatViewModel]
+  Handles UI state (messages, input, encryption status)
+  Updates via LiveData/StateFlow
+end note
+
+note right of [ChatRepository]
+  Abstracts data access (local SQLite, remote Ktor server)
+  Applies AES-256 encryption
+end note
+@enduml
+```
+
+classDiagram
+    ChatScreen <|-- ChatViewModel
+    ChatViewModel <|-- DialogRepository
+    ChatViewModel <|-- GameStateRepository
+    ChatScreen : +messages
+    ChatScreen : +choices
+    ChatViewModel : +uiState
+    DialogRepository : +getMessages()
+    GameStateRepository : +updateTrust() 

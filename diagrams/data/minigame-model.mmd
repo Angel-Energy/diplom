@@ -1,0 +1,13 @@
+' Модель данных мини-игры (расшифровка)
+' Структура для хранения задач, подсказок и проверки решения.
+@startuml Data Model MiniGame
+skinparam monochrome true
+
+class DecryptionGame {
+  * task : String
+  -- 
+  hint : String
+  answer : String
+  + checkSolution(input: String): Boolean
+}
+@enduml 

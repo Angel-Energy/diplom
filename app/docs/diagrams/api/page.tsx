@@ -3,7 +3,7 @@
 import CategoryPageTemplate from '@/components/category-page-template'
 import { Code2 } from 'lucide-react'
 
-export default function APIDiagramsPage() {
+export default function ApiDiagramsPage() {
   return (
     <CategoryPageTemplate
       categoryId="api"

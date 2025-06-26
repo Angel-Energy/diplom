@@ -1,0 +1,14 @@
+%% REST эндпоинты прогресса: /progress, /choices (GET/POST).
+@startuml Progress REST API
+skinparam monochrome true
+
+interface "/progress" {
+  + GET : Возвращает прогресс
+  + POST : Обновляет прогресс
+}
+
+interface "/choices" {
+  + GET : Возвращает варианты
+  + POST : Сохраняет выбор
+}
+@enduml 

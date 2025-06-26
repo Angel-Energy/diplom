@@ -1,0 +1,10 @@
+%% Синхронизация оффлайн-прогресса
+%% Архитектура офлайн-режима и синхронизации с сервером.
+graph TD
+    A[Local Room Database] -->|Offline| B[Game Progress]
+    B -->|Connection Available| C[Ktor Client]
+    C -->|Encrypted Sync| D[Ktor Server]
+    D -->|Update| E[MySQL with SQLCipher]
+    E -->|Response| D
+    D -->|Decrypted Data| C
+    C -->|Update UI| A 

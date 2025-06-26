@@ -1,0 +1,12 @@
+%% Схема развертывания сервера для психологического детектива «Сообщение 404»
+%% Ktor-приложение и MySQL с SQLCipher на VPS (Ubuntu 22.04), Web API через TLS, соответствие 152-ФЗ.
+@startuml Deployment Schema
+skinparam monochrome true
+
+node "VPS (Ubuntu 22.04)" {
+  [Ktor Server] --> [MySQL with SQLCipher]
+}
+
+[Ktor Server] : Web API (TLS)
+[MySQL with SQLCipher] : Encrypted Storage
+@enduml 

@@ -525,3 +525,121 @@ graph TB
 **Подписи**:  
 Разработчик: Иванов И.И.  
 Согласовал: Петров П.П.
+
+# Полный список диаграмм (61)
+
+Это полный список всех диаграмм проекта «Сообщение 404», структурированный по категориям с правильной нумерацией и ссылками для навигации.
+
+---
+
+### Архитектурные диаграммы
+1.  [MVVM-структура чата](/docs/diagrams/architecture/mvvm-chat)
+2.  [Поток данных шифрования](/docs/diagrams/architecture/encryption-flow)
+3.  [Диаграмма классов игровой логики](/docs/diagrams/architecture/game-logic-classes)
+4.  [Модули приложения](/docs/diagrams/architecture/app-modules)
+5.  [Интеграция Jetpack Compose с анимациями](/docs/diagrams/architecture/compose-animations)
+6.  [Общая схема клиент-серверной системы](/docs/diagrams/architecture/system-context)
+
+### Диаграммы данных
+7.  [Схема базы данных прогресса](/docs/diagrams/data/progress-db)
+8.  [JSON-структура состояния игрока](/docs/diagrams/data/player-json)
+9.  [Синхронизация оффлайн-прогресса](/docs/diagrams/data/offline-sync)
+10. [Модель данных мини-игры (расшифровка)](/docs/diagrams/data/minigame-model)
+11. [Хранилище флагов выбора](/docs/diagrams/data/flags-store)
+
+### Игровые диаграммы
+12. [Дерево сюжета первого дня](/docs/diagrams/game/day1-tree)
+13. [Схема мини-игры (поиск ошибок)](/docs/diagrams/game/minigame-flow)
+14. [Возможные концовки](/docs/diagrams/game/endings)
+15. [Динамика отношений с Еленой](/docs/diagrams/game/elena-relationship)
+16. [Карта прогресса (День 1-3)](/docs/diagrams/game/progress-map)
+
+### Диаграммы поведения
+17. [UML-классы чата](/docs/diagrams/behavior/chat-uml)
+18. [Состояния игрового дня](/docs/diagrams/behavior/day-states)
+19. [Последовательность запроса прогресса](/docs/diagrams/behavior/progress-request-seq)
+20. [Активность выбора в чате](/docs/diagrams/behavior/chat-choice-activity)
+21. [Взаимодействие с невидимым отправителем](/docs/diagrams/behavior/invisible-sender)
+22. [События уведомлений](/docs/diagrams/behavior/notification-events)
+
+### Диаграммы безопасности
+23. [Схема AES-256 для чата](/docs/diagrams/security/aes-chat)
+24. [Конфигурация TLS для сервера](/docs/diagrams/security/tls-sequence)
+25. [Обфускация APK](/docs/diagrams/security/apk-obfuscation)
+26. [SQLCipher шифрование базы](/docs/diagrams/security/sqlcipher-db)
+27. [Аутентификация токеном](/docs/diagrams/security/jwt-auth)
+28. [Поток защиты данных игрока](/docs/diagrams/security/player-data-protection)
+
+### Диаграммы API
+29. [REST эндпоинты прогресса](/docs/diagrams/api/progress-rest)
+30. [Аутентификационный поток](/docs/diagrams/api/auth-flow)
+31. [Пример запроса/ответа мини-игры](/docs/diagrams/api/minigame-request)
+32. [Маршрутизация Ktor](/docs/diagrams/api/ktor-routing)
+
+### UI/UX диаграммы
+33. [Навигация по экранам](/docs/diagrams/ui/screen-navigation)
+34. [Адаптивность чата](/docs/diagrams/ui/chat-adaptivity)
+35. [Анимация глич-эффекта](/docs/diagrams/ui/glitch-animation)
+36. [Макет интерфейса чата](/docs/diagrams/ui/chat-layout)
+37. [Пользовательский путь (День 1)](/docs/diagrams/ui/user-journey-day1)
+38. [Карта доступности TalkBack](/docs/diagrams/ui/talkback-map)
+
+### Инфраструктурные диаграммы
+39. [Схема развертывания сервера](/docs/diagrams/infrastructure/server-deploy)
+40. [Сеть с шифрованием](/docs/diagrams/infrastructure/encrypted-network)
+41. [Модель масштабирования](/docs/diagrams/infrastructure/scaling-model)
+42. [Бэкап данных прогресса](/docs/diagrams/infrastructure/progress-backup)
+43. [Мониторинг сервера](/docs/diagrams/infrastructure/server-monitoring)
+
+### Диаграммы тестирования
+44. [План Unit-тестов ViewModel](/docs/diagrams/testing/unit-test-flow)
+45. [Схема интеграции чата и сервера](/docs/diagrams/testing/chat-integration)
+46. [Тестирование шифрования AES-256](/docs/diagrams/testing/aes-test)
+47. [Стресс-тест переключения экранов](/docs/diagrams/testing/stress-screens)
+48. [Матрица покрытия сценариев](/docs/diagrams/testing/coverage-matrix)
+49. [Регрессионное тестирование выборов](/docs/diagrams/testing/regression-choices)
+50. [Тестирование производительности](/docs/diagrams/testing/performance-test)
+51. [Валидация мини-игры (расшифровка)](/docs/diagrams/testing/minigame-validation)
+52. [A/B-тест кнопок выбора](/docs/diagrams/testing/ab-test-buttons)
+53. [Карта баг-репортов](/docs/diagrams/testing/bug-map)
+
+### Жизненные циклы
+54. [Жизненный цикл разработки](/docs/diagrams/lifecycle/dev-lifecycle)
+55. [Цикл игрового дня](/docs/diagrams/lifecycle/game-day-cycle)
+56. [Сессия игрока](/docs/diagrams/lifecycle/player-session)
+57. [Цикл обновления сервера](/docs/diagrams/lifecycle/server-update-cycle)
+
+### Другие диаграммы
+58. [Roadmap проекта](/docs/diagrams/other/roadmap)
+59. [Структура команды](/docs/diagrams/other/team-structure)
+60. [Схема Git-репозитория](/docs/diagrams/other/git-schema)
+61. [Диаграмма compliance](/docs/diagrams/other/compliance)
+
+---
+
+# Отчет по разработке документации и автоматизации
+
+## Основные этапы
+- Проектирование структуры каталогов и категорий диаграмм (архитектура, данные, тестирование и др.)
+- Вынесение описаний и кода диаграмм из TypeScript в отдельные .md файлы
+- Введение единого реестра диаграмм (registry.ts) с метаданными и ссылками на .md
+- Автоматизация проверки наличия и структуры всех .md файлов
+- Массовое автозаполнение ключевых разделов (назначение, взаимодействие с командой, аспекты работы, текстовые схемы) во всех .md файлах согласно ТЗ
+- Аудит completeness: сверка всех диаграмм и описаний с техническим заданием
+- Очистка проекта от временных и дублирующих файлов, стандартизация структуры
+- Ведение CHANGELOG.md с фиксацией всех изменений
+- Работа с git: ветвление, коммиты, pull request, ревью
+
+## Улучшения и автоматизация
+- Вся документация теперь структурирована и легко поддерживается
+- Любые новые диаграммы добавляются через шаблон и автоматически проверяются
+- Все разделы .md файлов приведены к единому стандарту
+- В changelog фиксируются все значимые изменения
+
+## Рекомендации по поддержке
+- При добавлении новых диаграмм использовать шаблон .md
+- Регулярно проводить аудит completeness и актуальности
+- Вести changelog и использовать pull request для всех изменений
+- Поддерживать автоматизацию проверки структуры и заполненности
+
+> Данный отчет отражает процесс разработки, автоматизации и стандартизации всей документации по проекту, а также рекомендации для дальнейшей поддержки и развития.

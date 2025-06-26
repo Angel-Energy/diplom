@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { DiagramModal } from "./diagram-modal"
 import { Expand } from "lucide-react"
+import React from "react"
 
 const MermaidSimple = ({
   id,

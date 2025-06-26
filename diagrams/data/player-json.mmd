@@ -1,0 +1,9 @@
+%% JSON-структура состояния игрока
+%% Формат сериализации состояния для офлайн-режима и синхронизации.
+graph TD
+    A[Player State JSON] --> B{"day": 1}
+    A --> C{"trust": 50}
+    A --> D{"choices": ["hide"]}
+    B --> E[Current Game Day\n1-10]
+    C --> F[Trust Level\n0-100]
+    D --> G[Array of Choices\ne.g., "hide", "report"] 
