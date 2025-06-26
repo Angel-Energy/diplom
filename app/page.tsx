@@ -57,7 +57,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <Image src="/images/icon.png" alt="Сообщение 404" width={32} height={32} className="rounded-lg" />
+              <Image src="/images/icon.png" alt="Сообщение 404" width={32} height={32} className="rounded-lg" style={{width: 32, height: 32}} priority />
             </div>
             <div>
               <h1 className="text-xl font-bold text-cyan-400">Сообщение 404</h1>

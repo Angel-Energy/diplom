@@ -1,0 +1,13 @@
+%% Маршрутизация Ktor: эндпоинты чата и мини-игр.
+@startuml Ktor Routing
+skinparam monochrome true
+
+interface "/chat/{userId}" {
+  + GET : Получение сообщений
+  + POST : Отправка сообщения
+}
+
+interface "/validate/{gameId}" {
+  + POST : Валидация решения
+}
+@enduml 

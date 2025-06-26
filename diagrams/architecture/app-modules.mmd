@@ -1,0 +1,44 @@
+# Модули приложения
+
+## Описание
+Диаграмма иллюстрирует модульную архитектуру приложения: UI, Logic, Data, Security. Показывает зависимости между слоями и основные компоненты каждого модуля.
+
+## Взаимодействие с командой
+- Android-разработчик: развивает все модули и их интеграцию.
+- UI/UX-дизайнер: проектирует интерфейс.
+- Backend-разработчик: настраивает Data и Security на сервере.
+- Специалист по безопасности: конфигурирует Security.
+- Геймдизайнер: определяет логику для Logic.
+- DevOps: обеспечивает деплой и CI/CD.
+- QA-аналитик: тестирует интеграцию.
+- Технический писатель: документирует архитектуру.
+
+## Аспекты работы
+- Требует чёткого разделения задач между модулями.
+- Тестирование интеграции с QA-аналитиками.
+
+```plantuml
+@startuml Module Architecture
+skinparam monochrome true
+
+package "UI" { [ChatScreen] #LightGray [DialogueScreen] #LightGray [MiniGameScreen] #LightGray [Jetpack Compose] #LightGray }
+
+package "Logic" { [GameEngine] #LightGray [DialogueManager] #LightGray [MiniGameManager] #LightGray }
+
+package "Data" { [ChatRepository] #LightGray [GameRepository] #LightGray [Room Database] #LightGray [Ktor Client] #LightGray }
+
+package "Security" { [EncryptionService] #LightGray [KeyManager] #LightGray [SQLCipher] #LightGray }
+
+[UI] --> [Logic] : requests
+[Logic] --> [Data] : fetches
+[Data] --> [Security] : encrypts/decrypts
+
+note right of [UI] Built with Jetpack Compose Handles UI/UX (chat, dialogues, games) end note
+
+note right of [Logic] Manages game flow and decisions Interacts with Data layer end note
+
+note right of [Data] Provides data access (local/remote) Uses Ktor for server sync end note
+
+note right of [Security] Ensures data privacy with AES-256 Integrates SQLCipher for DB end note
+@enduml
+``` 

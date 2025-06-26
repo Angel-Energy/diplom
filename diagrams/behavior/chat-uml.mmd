@@ -1,0 +1,29 @@
+@startuml UML Chat Classes
+skinparam monochrome true
+
+class ChatViewModel {
+  - messages: List<Message>
+  - userInput: String
+  - isEncrypted: Boolean
+  + updateMessage(message: Message)
+  + sendChoice(choice: Choice)
+}
+
+class Message {
+  * id : Integer <<PK>>
+  -- 
+  text : String
+  sender : String
+  timestamp : Long
+  isEncrypted : Boolean
+}
+
+class Choice {
+  - text : String
+  - nextMessageId : Integer
+  - effect : (Player) -> Unit
+}
+
+ChatViewModel "1" -- "many" Message : contains
+ChatViewModel "1" -- "many" Choice : offers
+@enduml 

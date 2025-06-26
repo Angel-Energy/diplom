@@ -1,0 +1,35 @@
+' Схема базы данных прогресса
+' Реализовано с помощью Room (Android) и MySQL (сервер), поддержка SQLCipher и офлайн-режима.
+@startuml Database Schema
+skinparam monochrome true
+
+entity users {
+  * user_id : INTEGER <<PK>>
+  -- 
+  username : VARCHAR(50)
+  password_hash : VARCHAR(256)
+  created_at : TIMESTAMP
+}
+
+entity game_states {
+  * game_state_id : INTEGER <<PK>>
+  -- 
+  user_id : INTEGER <<FK>>
+  current_day : INTEGER
+  trust_level : INTEGER
+  threat_level : INTEGER
+  last_sync : TIMESTAMP
+}
+
+entity dialogues {
+  * dialogue_id : INTEGER <<PK>>
+  -- 
+  game_state_id : INTEGER <<FK>>
+  text : TEXT
+  is_locked : BOOLEAN
+  parent_dialogue_id : INTEGER <<FK>>
+}
+
+users ||--o{ game_states : has
+game_states ||--o{ dialogues : contains
+@enduml 

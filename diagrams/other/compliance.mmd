@@ -1,0 +1,17 @@
+%% Compliance: 152-ФЗ, ГОСТ Р 34.12-2015, шифрование, аутентификация, аудит. SQLCipher, TLS, тёмная тема.
+@startuml Compliance Diagram
+skinparam monochrome true
+
+package "152-ФЗ" {
+  [Шифрование AES-256]
+  [Аутентификация]
+}
+
+package "ГОСТ Р 34.12-2015" {
+  [Алгоритм Кузнечик]
+}
+
+[Android App] --> [152-ФЗ]
+[Ktor Server] --> [152-ФЗ]
+[Ktor Server] --> [ГОСТ Р 34.12-2015]
+@enduml 

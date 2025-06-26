@@ -1,0 +1,47 @@
+%% Схема AES-256 для чата
+%% Генерация ключа, шифрование, передача, хранение.
+graph TD
+    A[Генерация ключа<br>Keystore] --> B[Шифрование AES-256<br>CBC + IV]
+    B --> C[Зашифрованное сообщение]
+    C --> D[Ktor Client]
+    D --> E[Сервер] 
+
+# Поток данных шифрования
+
+## Описание
+Диаграмма иллюстрирует процесс шифрования и передачи данных между Android-клиентом и сервером через AES-256, Ktor и SQLCipher. Включает генерацию ключа, шифрование, хранение и обратную расшифровку.
+
+## Взаимодействие с командой
+- Android-разработчик: реализует клиентское шифрование и интеграцию с Ktor.
+- Backend-разработчик: настраивает сервер и MySQL.
+- Специалист по безопасности: внедряет и тестирует шифрование.
+- QA-аналитик: тестирует безопасность и нагрузку.
+- Юрист: проверяет соответствие 152-ФЗ и GDPR.
+- DevOps: настраивает деплой и бэкапы.
+- Технический писатель: документирует протокол.
+
+## Аспекты работы
+- Требует тестирования шифрования и координации ключей.
+- Документация поддерживается техническим писателем.
+
+```mermaid
+graph TD
+    A[Android Client<br>Chat Input] -->|User Input| B[Encryption Layer<br>AES-256]
+    B -->|Encrypted Data| C[Ktor Server]
+    C -->|Store| D[MySQL with SQLCipher]
+    D -->|Decrypt Request| C
+    C -->|Decrypted Data| B
+    B -->|Plain Text| A
+
+    subgraph Encryption Process
+        B --> E[Generate Key<br>256-bit AES]
+        E --> F[Encrypt with CBC Mode<br>IV Randomization]
+        F --> G[Send to Server]
+    end
+
+    subgraph Decryption Process
+        C --> H[Retrieve from SQLCipher]
+        H --> I[Decrypt with AES-256]
+        I --> J[Return to Client]
+    end
+``` 

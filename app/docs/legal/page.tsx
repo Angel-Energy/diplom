@@ -122,7 +122,7 @@ SOFTWARE.`}
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <Image src="/file.svg" alt="Privacy Policy Icon" width={24} height={24} className="h-6 w-6" />
+                <Image src="/file.svg" alt="Privacy Policy Icon" width={24} height={24} className="h-6 w-6" style={{width: 24, height: 24}} />
                 <div>
                   <CardTitle className="text-white">Privacy Policy</CardTitle>
                   <CardDescription className="text-slate-400">

@@ -1,0 +1,6 @@
+%% Анимация глич-эффекта: искажение текста при новом сообщении.
+sequenceDiagram
+    participant C as ChatViewModel
+    participant U as UI
+    C->>U: Новое сообщение
+    U->>U: Глич-эффект (200ms x3) 

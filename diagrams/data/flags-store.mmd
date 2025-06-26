@@ -1,0 +1,16 @@
+' Хранилище флагов выбора
+' Структура для хранения trust, threat и info_access (JSON).
+@startuml Flag Storage
+skinparam monochrome true
+
+class GameFlags {
+  * game_state_id : INTEGER <<PK>>
+  -- 
+  trust : INTEGER
+  threat : INTEGER
+  info_access : JSON
+  + updateTrust(value: Int)
+  + updateThreat(value: Int)
+  + setInfoAccess(key: String, value: Boolean)
+}
+@enduml 

@@ -1,0 +1,14 @@
+%% Модель масштабирования: балансировщик (Nginx), несколько экземпляров Ktor, MySQL с SQLCipher. Поддержка до 10k пользователей.
+@startuml Scaling Model
+skinparam monochrome true
+
+node "Load Balancer (Nginx)" {
+  [Ktor Instance 1]
+  [Ktor Instance 2]
+  [Ktor Instance 3]
+}
+
+[Ktor Instance 1] --> [MySQL with SQLCipher]
+[Ktor Instance 2] --> [MySQL with SQLCipher]
+[Ktor Instance 3] --> [MySQL with SQLCipher]
+@enduml 

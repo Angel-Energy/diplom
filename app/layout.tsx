@@ -1,42 +1,33 @@
-"use client"
-
 import './globals.css'
-import Script from 'next/script'
-import Head from 'next/head'
 import { Suspense } from 'react'
-import { ThemeProvider } from '@/components/theme-provider'
 import { Toaster } from '@/components/ui/toaster'
 import { ErrorBoundary } from '@/components/ErrorBoundary'
+import ThemeWrapper from '@/components/ThemeWrapper'
+import Script from 'next/script'
+
+export const metadata = {
+  title: 'Сообщение 404 - Документация',
+  description: "Документация проекта мобильной игры-детектива 'Сообщение 404'",
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
       <head>
-        <title>Сообщение 404 - Документация</title>
-        <meta name="description" content="Документация проекта мобильной игры-детектива 'Сообщение 404'" />
-        <meta name="generator" content="Next.js" />
-        <Script 
-          src="https://cdn.jsdelivr.net/npm/mermaid@11.7.0/dist/mermaid.min.js"
-          strategy="afterInteractive"
-        />
+        <Script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" strategy="beforeInteractive" />
       </head>
-      <body>
+      <body className="min-h-screen bg-background font-sans antialiased">
         <ErrorBoundary>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeWrapper>
             <Suspense fallback={<div>Загрузка...</div>}>
               {children}
             </Suspense>
             <Toaster />
-          </ThemeProvider>
+          </ThemeWrapper>
         </ErrorBoundary>
       </body>
     </html>

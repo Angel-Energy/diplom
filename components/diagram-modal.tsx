@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
+  DialogDescription,
 } from "@/components/ui/dialog"
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch"
 import { Button } from "@/components/ui/button"
@@ -34,6 +35,9 @@ export function DiagramModal({
         <DialogHeader>
           <DialogTitle className="text-slate-200">{title}</DialogTitle>
         </DialogHeader>
+        <DialogDescription>
+          Диаграмма: {title}
+        </DialogDescription>
         <div className="flex-grow h-0 w-full border border-slate-700 rounded-lg overflow-hidden">
           <TransformWrapper
             initialScale={1}

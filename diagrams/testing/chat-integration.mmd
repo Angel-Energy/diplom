@@ -1,0 +1,13 @@
+%% Интеграция чата: тестирование эндпоинтов.
+@startuml Chat Integration Test
+skinparam monochrome true
+
+actor Client
+participant "Ktor Client" as KC
+participant "Mock Server" as MS
+
+Client -> KC : Запрос /chat/{userId}
+KC -> MS : GET/POST
+MS --> KC : Ответ (успех/ошибка)
+KC --> Client : Проверка результата
+@enduml 

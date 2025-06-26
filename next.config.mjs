@@ -12,8 +12,8 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: ['lucide-react'],
-    serverComponentsExternalPackages: [],
   },
+  serverExternalPackages: [],
   webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,

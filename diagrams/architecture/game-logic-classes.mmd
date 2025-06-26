@@ -1,0 +1,80 @@
+# Диаграмма классов игровой логики
+
+## Описание
+Диаграмма отражает основные классы игровой логики: Player, Dialogue, DialogueOption, GameDay, MiniGame. Показывает связи между сущностями, методы и влияние на игровой процесс.
+
+## Взаимодействие с командой
+- Android-разработчик: реализует классы и интеграцию с MVVM.
+- Геймдизайнер: проектирует баланс и эффекты.
+- Нарративный дизайнер: пишет тексты и опции.
+- Левел-дизайнер: структурирует дни и мини-игры.
+- Сценарист: прорабатывает персонажей.
+- Гейм-тестер: тестирует ветвления и мини-игры.
+- Технический писатель: документирует классы.
+
+## Аспекты работы
+- Требует совместной работы над балансом и тестированием.
+- Данные хранятся в JSON или Room.
+
+```plantuml
+@startuml Class Diagram Game Logic
+skinparam monochrome true
+
+class Player {
+  - name: String = "Алексей Соколов"
+  - trustLevel: Int
+  - threatLevel: Int
+  - inventory: List<Item>
+  + updateTrust(delta: Int)
+  + updateThreat(delta: Int)
+  + addItem(item: Item)
+}
+
+class Dialogue {
+  - id: Int
+  - text: String
+  - options: List<DialogueOption>
+  - isLocked: Boolean
+  + getOptions(): List<DialogueOption>
+  + unlock()
+}
+
+class DialogueOption {
+  - text: String
+  - nextDialogueId: Int
+  - effect: (Player) -> Unit
+}
+
+class GameDay {
+  - dayNumber: Int
+  - dialogues: List<Dialogue>
+  - miniGames: List<MiniGame>
+  - isCompleted: Boolean
+  + startDay()
+  + endDay()
+}
+
+Player "1" -- "many" Dialogue : participatesIn
+Dialogue "1" -- "many" DialogueOption : has
+GameDay "1" -- "many" Dialogue : contains
+GameDay "1" -- "many" MiniGame : contains
+
+class MiniGame {
+  - type: String
+  - difficulty: Int
+  - isSolved: Boolean
+  + start()
+  + checkSolution(): Boolean
+}
+
+note right of Player
+  Trust and threat levels influence
+  dialogue options and endings
+end note
+
+note right of Dialogue
+  Options trigger effects on Player
+  (e.g., +10 trust, +5 threat)
+end note
+@enduml
+``` 

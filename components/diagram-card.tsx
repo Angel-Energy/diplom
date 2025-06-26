@@ -24,7 +24,7 @@ export function DiagramCard({ title, description, category, imageSrc, conclusion
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="rounded-lg overflow-hidden border border-slate-700">
-          <Image src={imageSrc || "/placeholder.svg"} alt={title} width={600} height={400} className="w-full h-auto" />
+          <Image src={imageSrc || "/placeholder.svg"} alt={title} width={600} height={400} className="w-full h-auto" style={{width: 600, height: 400}} priority />
         </div>
         {conclusion && (
           <div className="p-4 bg-slate-900/50 rounded-lg border border-slate-700/50">

@@ -1,28 +1,111 @@
 "use client"
 
-import { getAllDiagrams, diagramCategories } from '@/diagrams/registry'
+import { getAllDiagrams, diagramCategories, getCategoryDescriptions } from '@/diagrams/registry'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
 import { ArrowRight, BarChart3, Layers, Shield, TestTube, Clock, Database, Gamepad2, Palette, Server, Code2, MoreHorizontal } from 'lucide-react'
 import DiagramPageLayout from '@/components/diagram-page-layout'
 
+const CATEGORY_META = [
+  {
+    id: 'architecture',
+    title: 'Архитектура',
+    description: 'C4 модель, компоненты, слои, развертывание',
+    color: 'bg-cyan-700 text-cyan-200',
+    bar: 'from-cyan-400 to-purple-400',
+  },
+  {
+    id: 'game',
+    title: 'Игровые механики',
+    description: 'Game Loop, диалоги, мини-игры, прогрессия',
+    color: 'bg-purple-700 text-purple-200',
+    bar: 'from-purple-400 to-cyan-400',
+  },
+  {
+    id: 'data',
+    title: 'Данные',
+    description: 'ERD, потоки данных, репликация, миграция',
+    color: 'bg-blue-700 text-blue-200',
+    bar: 'from-blue-400 to-cyan-400',
+  },
+  {
+    id: 'api',
+    title: 'API',
+    description: 'Endpoints, форматы, состояния API',
+    color: 'bg-violet-700 text-violet-200',
+    bar: 'from-violet-400 to-cyan-400',
+  },
+  {
+    id: 'ui',
+    title: 'UI/UX',
+    description: 'User Flow, навигация, состояния UI',
+    color: 'bg-cyan-800 text-cyan-200',
+    bar: 'from-cyan-400 to-purple-400',
+  },
+  {
+    id: 'infrastructure',
+    title: 'Инфраструктура',
+    description: 'Сеть, безопасность, мониторинг, бэкапы',
+    color: 'bg-teal-800 text-teal-200',
+    bar: 'from-teal-400 to-cyan-400',
+  },
+  {
+    id: 'dynamic',
+    title: 'Динамические',
+    description: 'Sequence, State, Activity, Timing',
+    color: 'bg-lime-800 text-lime-200',
+    bar: 'from-lime-400 to-cyan-400',
+  },
+]
+
+const categoryColors: Record<string, string> = {
+  architecture: 'bg-cyan-700 text-cyan-200',
+  data: 'bg-blue-700 text-blue-200',
+  game: 'bg-purple-700 text-purple-200',
+  api: 'bg-violet-700 text-violet-200',
+  ui: 'bg-cyan-800 text-cyan-200',
+  infrastructure: 'bg-teal-800 text-teal-200',
+  dynamic: 'bg-lime-800 text-lime-200',
+  behavior: 'bg-cyan-900 text-cyan-200',
+  security: 'bg-red-800 text-red-200',
+  testing: 'bg-green-800 text-green-200',
+  lifecycle: 'bg-orange-800 text-orange-200',
+  other: 'bg-gray-700 text-gray-200',
+}
+const categoryBars: Record<string, string> = {
+  architecture: 'from-cyan-400 to-purple-400',
+  data: 'from-blue-400 to-cyan-400',
+  game: 'from-purple-400 to-cyan-400',
+  api: 'from-violet-400 to-cyan-400',
+  ui: 'from-cyan-400 to-purple-400',
+  infrastructure: 'from-teal-400 to-cyan-400',
+  dynamic: 'from-lime-400 to-cyan-400',
+  behavior: 'from-cyan-400 to-blue-400',
+  security: 'from-red-400 to-cyan-400',
+  testing: 'from-green-400 to-cyan-400',
+  lifecycle: 'from-orange-400 to-cyan-400',
+  other: 'from-gray-400 to-cyan-400',
+}
+
 export default function DiagramsPage() {
-  // Получаем все диаграммы и категории из реестра
   const allDiagrams = getAllDiagrams()
+  const totalDiagrams = allDiagrams.length
+  const categoryDescriptions = getCategoryDescriptions()
   const categories = diagramCategories.map(cat => ({
     id: cat.id,
     title: cat.title,
-    short_description: cat.description,
     count: cat.diagrams.length,
     href: `/docs/diagrams/${cat.id}`,
-    badgeColor: cat.color,
+    description: categoryDescriptions[cat.id]?.split('\n')[0] || '',
+    color: categoryColors[cat.id] || 'bg-cyan-700 text-cyan-200',
+    bar: categoryBars[cat.id] || 'from-cyan-400 to-purple-400',
   }))
 
-  const totalDiagrams = allDiagrams.length
-  const architecturalDiagrams = allDiagrams.filter(d => d.category === "architecture").length
-  const behaviorDiagrams = allDiagrams.filter(d => d.category === "behavior").length
-  const securityDiagrams = allDiagrams.filter(d => d.category === "security").length
+  // Статистика
+  const numCategories = categories.length
+  const numArchitectural = categories.find(c => c.id === 'architecture')?.count || 0
+  const numFunctional = totalDiagrams - numArchitectural
 
   return (
     <div className="space-y-8">
@@ -31,14 +114,14 @@ export default function DiagramsPage() {
           Диаграммы проекта
         </h1>
         <p className="text-xl text-slate-300">
-          Все {totalDiagrams} диаграмм{totalDiagrams % 10 === 1 && totalDiagrams % 100 !== 11 ? 'а' : totalDiagrams % 10 >= 2 && totalDiagrams % 10 <= 4 && (totalDiagrams % 100 < 10 || totalDiagrams % 100 >= 20) ? 'ы' : ''} проекта «Сообщение 404» в {categories.length} категори{categories.length % 10 === 1 && categories.length % 100 !== 11 ? 'и' : categories.length % 10 >= 2 && categories.length % 10 <= 4 && (categories.length % 100 < 10 || categories.length % 100 >= 20) ? 'ях' : 'ях'} с подробными описаниями
+          Все {totalDiagrams} диаграмм проекта "Сообщение 404" в текстовом формате с описаниями и выводами
         </p>
         <div className="flex flex-wrap gap-2">
           {categories.map((category, index) => (
             <Badge
               key={index}
               variant="outline"
-              className={category.badgeColor}
+              className={category.color + ' border-0'}
             >
               {category.title}: {category.count}
             </Badge>
@@ -60,51 +143,25 @@ export default function DiagramsPage() {
             </div>
             <div>
               <div className="text-3xl font-bold text-purple-400 mb-2">
-                {categories.length}
+                {numCategories}
               </div>
               <div className="text-sm text-slate-400">Категорий</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-red-400 mb-2">
-                {architecturalDiagrams}
+              <div className="text-3xl font-bold text-cyan-400 mb-2">
+                {numArchitectural}
               </div>
-              <div className="text-sm text-slate-400">Архитектурные</div>
+              <div className="text-sm text-slate-400">Архитектурных</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-cyan-400 mb-2">
-                {behaviorDiagrams + securityDiagrams}
+              <div className="text-3xl font-bold text-purple-400 mb-2">
+                {numFunctional}
               </div>
-              <div className="text-sm text-slate-400">Поведение + Безопасность</div>
+              <div className="text-sm text-slate-400">Функциональных</div>
             </div>
           </div>
         </CardContent>
       </Card>
-
-      <div className="p-6 bg-slate-800/50 rounded-lg border border-slate-700/50">
-        <h3 className="text-lg font-semibold text-white mb-3">
-          О диаграммах проекта «Сообщение 404»
-        </h3>
-        <div className="text-slate-300 text-sm space-y-2">
-          <div>
-            • <strong>Все диаграммы</strong> созданы специально для мобильной игры-детектива с архитектурой MVVM.
-          </div>
-          <div>
-            • Полный охват: от архитектуры Jetpack Compose до аспектов безопасности и тестирования.
-          </div>
-          <div>
-            • Технологический стек: Kotlin, MVVM, Clean Architecture, Ktor, Room, MySQL, DexGuard.
-          </div>
-          <div>
-            • Соответствие стандартам: GDPR, 152-ФЗ, ГОСТ Р 34.12-2015, OWASP Mobile Top 10.
-          </div>
-          <div>
-            • Каждая диаграмма содержит практические рекомендации для разработчиков, тестировщиков и архитекторов.
-          </div>
-          <div>
-            • Модульная файловая система обеспечивает переиспользование и версионирование диаграмм.
-          </div>
-        </div>
-      </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {categories.map((category, index) => {
@@ -117,19 +174,19 @@ export default function DiagramsPage() {
                     <CardTitle className="text-white group-hover:text-cyan-400">
                       {category.title}
                     </CardTitle>
-                    <Badge className={category.badgeColor}>
+                    <Badge className={category.color + ' border-0'}>
                       {category.count}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="flex-grow flex flex-col justify-between">
                   <p className="text-slate-400 text-sm mb-4">
-                    {category.short_description}
+                    {category.description}
                   </p>
                   <div className="space-y-2 mt-auto">
                     <div className="w-full bg-slate-700 rounded-full h-2">
                       <div
-                        className="bg-gradient-to-r from-cyan-500 to-purple-500 h-2 rounded-full"
+                        className={`bg-gradient-to-r ${category.bar} h-2 rounded-full`}
                         style={{ width: `${percentage}%` }}
                       ></div>
                     </div>
